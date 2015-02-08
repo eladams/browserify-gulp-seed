@@ -1,12 +1,12 @@
-# Browserify-gulp-seed
+# Famous Browserify-Gulp-seed
 > A seed project to get started with Browserify, Gulp, Livereload and Famo.us
 
 
 ###Installation
 
 ```bash
-git clone https://github.com/elad/browserify-gulp-seed
-cd browserify-gulp-seed
+git clone https://github.com/elad/famous-browserify-gulp-seed
+cd famous-browserify-gulp-seed
 # rm -rf .git && git init && git commit -m "Make it so" # optionally reset git history
 npm i # install dependencies
 ```
