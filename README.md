@@ -6,7 +6,13 @@
 ```bash
 git clone https://github.com/elad/famous-browserify-gulp-seed
 cd famous-browserify-gulp-seed
-# rm -rf .git && git init && git commit -m "Make it so" # optionally reset git history
+```
+Optionally reset git history:
+```bash
+# rm -rf .git && git init && git commit -m "initial commit"
+```
+then,
+```
 npm i # install dependencies
 ```
 
