@@ -1,5 +1,5 @@
 # Famous Browserify-Gulp-seed
-> A seed project to get started with Famo.us development environment using Browserify, Gulp and Connect server( Live-Reload)
+> A seed project to get started with Famo.us development environment using Browserify, Gulp and Connect server( Live-Reload).
 
 ###Installation
 
