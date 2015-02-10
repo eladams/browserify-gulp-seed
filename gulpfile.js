@@ -9,10 +9,12 @@ var browserify = require('browserify'),
     sourcemaps = require('gulp-sourcemaps'),
     gulpif = require('gulp-if'),
     connect = require('gulp-connect'),
-    plumber = require('gulp-plumber'),
-    gutil = require('gulp-util');
+    gutil = require('gulp-util'),
+    to5ify = require("6to5ify"),
+    gulpif = require('gulp-if');
 
 var env = process.env.NODE_ENV || 'development';
+var isInDevelopmentMode = env === 'development'
 var outputDir = './public';
 var scriptFiles = './src/**/*';
 
@@ -24,8 +26,8 @@ gulp.task('js', function() {
 
   var bundler = browserify({
     entries: ['./src/app'],
-    debug: env === 'dev'
-  });
+    debug: isInDevelopmentMode
+  }).transform(to5ify);
 
   var bundle = function() {
     return bundler
@@ -38,7 +40,7 @@ gulp.task('js', function() {
       .pipe(gulpif(env === 'prod',uglify()))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(outputDir + '/js/'))
-      .pipe(connect.reload());
+      .pipe(gulpif(isInDevelopmentMode, connect.reload()));
   };
 
   return bundle();
@@ -57,6 +59,8 @@ gulp.task('connect', function() {
 
 gulp.task('default', function() {
   gulp.start('js');
-  gulp.start('connect');
-  gulp.watch(scriptFiles,['js']);
+  if (isInDevelopmentMode) {
+    gulp.start('connect');
+    gulp.watch(scriptFiles,['js']);
+  }
 });
