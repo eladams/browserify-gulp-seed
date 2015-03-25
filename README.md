@@ -2,9 +2,14 @@
 > A seed project to get started with [Famo.us](http://famo.us) development environment using [Browserify](http://browserify.org/), [Gulp](http://gulpjs.com/) and a [gulp-connect](https://github.com/avevlad/gulp-connect) server (with Live-Reload).
 
 ###Installation
-
+for GitHub ssh users:
 ```bash
-git clone https://github.com/elad/famous-browserify-gulp-seed
+git clone git@github.com:eladams/famous-browserify-gulp-seed.git
+cd famous-browserify-gulp-seed
+```
+or for the https users
+```bash
+git clone https://github.com/eladams/famous-browserify-gulp-seed
 cd famous-browserify-gulp-seed
 ```
 Optionally reset git history:
