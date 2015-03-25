@@ -21,6 +21,8 @@ var logo = new ImageSurface({
 });
 
 var initialTime = Date.now();
+setTimeout( () => console.log("6 to 5"), 1000);
+
 var centerSpinModifier = new Modifier({
   align: [0.5, 0.5],
   origin: [0.5, 0.5],

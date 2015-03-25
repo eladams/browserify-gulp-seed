@@ -16,6 +16,7 @@
     "watch": "NODE_ENV=dev gulp watch"
   },
   "devDependencies": {
+    "6to5ify": "^4.1.0",
     "browserify": "^8.0.3",
     "eslint": "^0.13.0",
     "gulp-connect": "^2.2.0",
