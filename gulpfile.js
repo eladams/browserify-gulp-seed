@@ -10,7 +10,7 @@ var browserify = require('browserify'),
     gulpif = require('gulp-if'),
     connect = require('gulp-connect'),
     gutil = require('gulp-util'),
-    to5ify = require("6to5ify"),
+    babelify = require("babelify"),
     gulpif = require('gulp-if');
 
 var env = process.env.NODE_ENV || 'development';
@@ -27,7 +27,7 @@ gulp.task('js', function() {
   var bundler = browserify({
     entries: ['./src/app'],
     debug: isInDevelopmentMode
-  }).transform(to5ify);
+  }).transform(babelify);
 
   var bundle = function() {
     return bundler
