@@ -31,4 +31,4 @@ Now the dev server with Livereload should run on localhost:8080
 Greatly influenced by [Famous/browserify-seed](https://github.com/Famous/browserify-seed/).
 
 ###Pitfalls
-If the bundle fails you might need to run gulp again, a fix will be applied soon :)
+We don't know of :)
