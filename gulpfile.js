@@ -11,10 +11,11 @@ var browserify = require('browserify'),
     connect = require('gulp-connect'),
     gutil = require('gulp-util'),
     babelify = require("babelify"),
-    gulpif = require('gulp-if');
+    gulpif = require('gulp-if'),
+    watchify = require("watchify");
 
 var env = process.env.NODE_ENV || 'development';
-var isInDevelopmentMode = env === 'development'
+var isInDevelopmentMode = env === 'development';
 var outputDir = './public';
 var scriptFiles = './src/**/*';
 
@@ -22,33 +23,35 @@ var getBundleName = function () {
   return 'bundle';
 };
 
-gulp.task('js', function() {
-
-  var bundler = browserify({
-    entries: ['./src/app'],
-    debug: isInDevelopmentMode
-  }).transform(babelify);
-
-  var bundle = function() {
-    return bundler
-      .bundle()
-      .on('error', gutil.log)
-      .pipe(source(getBundleName() + '.js'))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({ loadMaps: true }))
-        // Add transformation tasks to the pipeline here.
-      .pipe(gulpif(env === 'prod',uglify()))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(outputDir + '/js/'))
-      .pipe(gulpif(isInDevelopmentMode, connect.reload()));
-  };
-
-  return bundle();
+var bundler = browserify({
+  entries: ['./src/app'],
+  transform: [babelify],
+  debug: isInDevelopmentMode,
+  cache: {}, packageCache: {}, fullPaths: true
 });
 
-gulp.task('watch', function () {
-  gulp.watch(scriptFiles,['js']);
-});
+if (isInDevelopmentMode) {
+  bundler = watchify(bundler);
+}
+bundler.on('update', bundle); // on any dep update, runs the bundler
+bundler.on('log', gutil.log); // output build logs to terminal
+
+gulp.task('js', bundle);
+
+function bundle() {
+  return bundler
+    .bundle()
+    .on('error', gutil.log)
+    .pipe(source(getBundleName() + '.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
+      // Add transformation tasks to the pipeline here.
+    .pipe(gulpif(env === 'prod',uglify()))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(outputDir + '/js/'))
+    .pipe(gulpif(isInDevelopmentMode, connect.reload()));
+}
+
 
 gulp.task('connect', function() {
   connect.server({
@@ -61,6 +64,5 @@ gulp.task('default', function() {
   gulp.start('js');
   if (isInDevelopmentMode) {
     gulp.start('connect');
-    gulp.watch(scriptFiles,['js']);
   }
 });
